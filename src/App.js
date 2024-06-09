@@ -16,6 +16,7 @@ const App = () => {
       case '1':
         return (
           <List
+          style={{backgroundColor: '#f2ebe4'}}
             header={
               <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold' }}>
                 Primi Piatti
@@ -24,29 +25,40 @@ const App = () => {
             bordered
             dataSource={[
               { item: 'Piatto della Settimana', ingredients: '', price: '10.00 €' },
+              { item: 'Tagliere di affettati misti', ingredients: 'crudo serrano, bresaola punta d`anca, soppressa nostrana, pancetta', price: '12.00 €' },
               { item: 'PASTA FREDDA', ingredients: 'Lunedi - Farfalle al pesto, zucchine e pomodorini, Martedi - Penne sfilaci, pomodorini e grana, Mercoledi - Farfalle con tonno, pomodorini, capperi, Giovedi - Insalata di riso rosso con verdure alla curcuma zucchine, carote,olive ', price: '8.50 €' },
               { subheader: true, content: 'Insalate' },
-              { item: 'CAPRESE', ingredients: 'pomodoro cuore di bue, mozzarella fior di latte, pesto e basilico', price: '8,50 €' },
-              { item: 'VASILISA', ingredients: 'insalata misticanza, finocchio, ceci, cetrioli, pomodori secchi e scaglie di grana', price: '8,50 €' },
-              { item: 'VERDUROSA', ingredients: 'insalata misticanza, pomodorini, zucchine, melanzane, peperoni, avocado, broccoli, e grana', price: '8,50 €' },
-              { item: 'PHOCAONTAS', ingredients: 'insalata misticanza, bresaola, pomodorini, riccioli di finocchio, philadelphia e noci ', price: '10,00 €' },
-              { item: 'CLASSICA', ingredients: 'insalata misticanza, carote, pomodoro, tonno e mozzarella', price: '9,00 €' },
-              { item: 'CAESAR', ingredients: 'insalata misticanza,pomodorini, stracetti di pollo, bacon croccante,salsa cesar, grana a scaglie e crostini', price: '10,00 €' },
-              { item: 'FRESCA', ingredients: 'insalata misticanza, sfilaci, uova, zucchine grigliate, grana e olive', price: '9,00 €' },
-              { item: 'DELICATA', ingredients: 'insalata misticanza, cetriolo, arancia, gamberetti, avocado, e mais', price: '9,00 €' },
-              { item: 'DARIA', ingredients: ' insalata misticanza, carote, pomodorini, philadelphia, fesa di tacchino e semi di zucca', price: '9,00 €' },
+              { item: 'CAPRESE', ingredients: 'pomodoro cuore di bue, mozzarella fior di latte, pesto e basilico', price: '8.50 €' },
+              { item: 'VASILISA', ingredients: 'insalata misticanza, finocchio, ceci, cetrioli, pomodori secchi e scaglie di grana', price: '8.50 €' },
+              { item: 'VERDUROSA', ingredients: 'insalata misticanza, pomodorini, zucchine, melanzane, peperoni, avocado, broccoli, e grana', price: '8.50 €' },
+              { item: 'POCAHONTAS', ingredients: 'insalata misticanza, bresaola, pomodorini, riccioli di finocchio, philadelphia e noci ', price: '10.00 €' },
+              { item: 'CLASSICA', ingredients: 'insalata misticanza, carote, pomodoro, tonno e mozzarella', price: '9.00 €' },
+              { item: 'CAESAR', ingredients: 'insalata misticanza,pomodorini, stracetti di pollo, bacon croccante,salsa cesar, grana a scaglie e crostini', price: '10.00 €' },
+              { item: 'FRESCA', ingredients: 'insalata misticanza, sfilaci, uova, zucchine grigliate, grana e olive', price: '9.00 €' },
+              { item: 'DELICATA', ingredients: 'insalata misticanza, cetriolo, arancia, gamberetti, avocado, e mais', price: '9.00 €' },
+              { item: 'DARIA', ingredients: ' insalata misticanza, carote, pomodorini, philadelphia, fesa di tacchino e semi di zucca', price: '9.00 €' },
               { subheader: true, content: 'Snack' },
-              { item: 'Tramezzini ', ingredients: 'Vari gusti', price: '2,50 €' },
+              { item: 'Tramezzini ', ingredients: 'vari gusti', price: '2.50 €' },
               { item: 'Piadina', ingredients: 'crudo serrano e mozzarella filante', price: '5.00 €' },
-              { item: 'Piadina', ingredients: 'Prosciutto cotto, pomodoro e mozarella', price: '5.00 €' },
+              { item: 'Piadina', ingredients: 'prosciutto cotto, pomodoro e mozarella', price: '5.00 €' },
               { item: 'Piadina Integrale', ingredients: 'mozzarella, pomodoro, melanzane grigliate e grana', price: '5.00 €' },
               { item: 'Piadina Integrale', ingredients: 'tacchino arrosto, philadelphia, pomodoro ramato e insalatina', price: '5.00 €' },
               { item: 'Focaccia Genovese', ingredients: 'soppressa e fontina', price: '5.00 €' },
               { item: 'Focaccia Genovese', ingredients: 'mozzarella, zucchine grigliate e pomodoro', price: '5.00 €' },
               { item: 'Panino alla curcuma', ingredients: ' spianata calabra, rucola e formaggio', price: '5.00 €' },
-              { item: 'Tostone Classico', ingredients: 'Prosciutto cotto e fontina', price: '5.00 €' },
+              { item: 'Tostone Classico', ingredients: 'prosciutto cotto e fontina', price: '5.00 €' },
               { item: 'Tostone ai Cereali', ingredients: 'zucchine e melanzane grligliati, spinaci e formaggio', price: '5.00 €' },
-              { item: 'Toast alla Curcuma', ingredients: 'Uovo sodo, avocado, bacon, pomodoro e insalata', price: '5.00 €' },
+              { item: 'Toast alla Curcuma', ingredients: 'uovo sodo, avocado, bacon, pomodoro e insalata', price: '5.00 €' },
+              { subheader: true, content: 'Aggiunte' },
+              { item: 'Crudo/ Bresaola/ Tacchino', ingredients: '', price: '2.00 €' },
+              { item: 'Sfilaci', ingredients: '', price: '2.00 €' },
+              { item: 'Mozzarella', ingredients: '', price: '2.00 €' },
+              { item: 'Tonno', ingredients: '', price: '1.00 €' },
+              { item: 'Uovo', ingredients: '', price: '1.00 €' },
+              { item: 'Verdure', ingredients: '', price: '1.00 €' },
+              { item: 'Grana', ingredients: '', price: '1.00 €' },
+              { item: 'Salsa Rosà/ avocado/ yogurt', ingredients: '', price: '0.50 €' },
+              
             ]}
             renderItem={item => {
               if (item.subheader) {
@@ -61,8 +73,8 @@ const App = () => {
                 // Splitting the ingredients by comma
                 const ingredientsList = item.ingredients.split(',');
                 return (
-                  <List.Item style={{ display: 'flex', flexDirection: 'column' }}>
-                    <div>
+                  <List.Item style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
                       <Typography.Text strong>{item.item}</Typography.Text>
                       {ingredientsList.map((ingredient, index) => {
                         // Separating day and dish
@@ -78,17 +90,17 @@ const App = () => {
                         }
                       })}
                     </div>
-                    <div><Typography.Text strong>{item.price}</Typography.Text></div>
+                    <div style={{ marginLeft: 'auto' }}><Typography.Text strong>{item.price}</Typography.Text></div>
                   </List.Item>
                 );
               } else {
                 return (
-                  <List.Item style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div>
+                  <List.Item style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
                       <Typography.Text strong>{item.item}</Typography.Text>
                       <div>{item.ingredients}</div>
                     </div>
-                    <div><Typography.Text strong>{item.price}</Typography.Text></div>
+                    <div style={{ marginLeft: 'auto' }}><Typography.Text strong>{item.price}</Typography.Text></div>
                   </List.Item>
                 );
               }
@@ -98,9 +110,10 @@ const App = () => {
       case '2':
         return (
           <List
+          style={{backgroundColor: '#f2ebe4'}}
             header={
               <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold' }}>
-                Cichetti - 2€
+                Cichetti - 1.80 €
               </div>
             }
             bordered
@@ -119,13 +132,13 @@ const App = () => {
               { item: 'Hugo', ingredients: '', price: '4.50 €' },
               { item: 'Campari gin', ingredients: '', price: '4.50 €' },
               { subheader: true, content: 'Spritz Speciali '},
-              { item: 'Limoncello', ingredients: 'Limoncello, succo di limone, sciroppo di zucchero, prosecco, seltz', price: '4.50 €' },
-              { item: 'Maracuja', ingredients: 'Sciroppo maracuja, prosecco, seltz, passoa ', price: '4.50 €' },
-              { item: 'Curaçao', ingredients: 'Blue curaçao, lemonsoda, vodka ', price: '4.50 €' },
-              { item: 'Lemon', ingredients: 'Campari, lemonsoda, gin ', price: '4.50 €' },
-              { item: 'Havana ', ingredients: 'Campari, succo d’arancia, rum ', price: '4.50 €' },
-              { item: 'Montenegro ', ingredients: 'Aperol, Montenegro, prosecco, seltz ', price: '4.50 €' },
-              { item: 'Pumpkin', ingredients: 'Liquore di Zucca, Aperol, prosecco, seltz ', price: '4.50 €' },
+              { item: 'Limoncello', ingredients: 'limoncello, succo di limone, sciroppo di zucchero, prosecco, seltz', price: '4.50 €' },
+              { item: 'Maracuja', ingredients: 'sciroppo maracuja, prosecco, seltz, passoa ', price: '4.50 €' },
+              { item: 'Curaçao', ingredients: 'blue curaçao, lemonsoda, vodka ', price: '4.50 €' },
+              { item: 'Lemon', ingredients: 'campari, lemonsoda, gin ', price: '4.50 €' },
+              { item: 'Havana ', ingredients: 'campari, succo d’arancia, rum ', price: '4.50 €' },
+              { item: 'Montenegro ', ingredients: 'aperol, Montenegro, prosecco, seltz ', price: '4.50 €' },
+              { item: 'Pumpkin', ingredients: 'liquore di Zucca, Aperol, prosecco, seltz ', price: '4.50 €' },
               { item: 'Esmerald ', ingredients: 'P31, ginger beer, vodka', price: '4.50 €' },
               { subheader: true, content: 'Cocktails'},
               { item: 'Bellini', ingredients: '', price: '5.00 €' },
@@ -147,6 +160,21 @@ const App = () => {
               { item: 'Old Fashioned', ingredients: '', price: '8.00 €' },
               { item: 'Paloma', ingredients: '', price: '8.00 €' },
               { item: 'Caipirinha', ingredients: '', price: '8.00 €' },
+              { subheader: true, content: 'Birre'},
+              { item: 'Birra Heineken', ingredients: '', price: '3.50 €' },
+              { item: 'Birra Leffe Rouge', ingredients: '', price: '5.00 €' },
+              { item: 'Birra Leffe Blonde', ingredients: '', price: '5.00 €' },
+              { subheader: true, content: 'Vino'},
+              { item: 'Vino Rosso calice', ingredients: '', price: '4.00 €' },
+              { item: 'Vino Bianco calice', ingredients: '', price: '4.00 €' },
+              { item: 'Prosecco calice', ingredients: '', price: '4.00 €' },
+              { item: 'Vino bottiglia', ingredients: '', price: '18.00 €' },
+              { subheader: true, content: 'Digestivi'},
+              { item: 'Amaro', ingredients: '', price: '3.50 €' },
+              { item: 'Limoncello', ingredients: '', price: '3.50 €' },
+              { item: 'Grappa', ingredients: '', price: '4.00 €' },
+              { item: 'Tequila', ingredients: '', price: '4.00 €' },
+              { item: 'Vodka', ingredients: '', price: '3.50 €' },
             ]} 
 
             renderItem={item => {
@@ -160,12 +188,16 @@ const App = () => {
                 );
               } else {
                 return (
-                  <List.Item style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div>
-                      <Typography.Text strong>{item.item}</Typography.Text>
+                  <List.Item style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
+                      <div><strong>{item.item}</strong></div>
                       <div>{item.ingredients}</div>
                     </div>
-                    <div><Typography.Text strong>{item.price}</Typography.Text></div>
+                    {item.price && (
+                      <div style={{ marginLeft: 'auto' }}>
+                        <Typography.Text strong>{item.price}</Typography.Text>
+                      </div>
+                    )}
                   </List.Item>
                 );
               }
@@ -175,6 +207,7 @@ const App = () => {
       case '3':
         return (
           <List
+          style={{backgroundColor: '#f2ebe4'}}
             header={
               <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold' }}>
                 Centrifughe
@@ -186,8 +219,16 @@ const App = () => {
               { item: 'Mela, arancia e carota ', ingredients: '', price: '5.00 €' },
               { item: 'Arancia, limone zenzero ', ingredients: '', price: '5.00 €' },
               { item: 'Mela, carota', ingredients: '', price: '5.00 €' },
-              { item: 'Spremuta, arancia', ingredients: '', price: '5.00 €' },
-            ]}
+              { item: 'Spremuta di arancia', ingredients: '', price: '5.00 €' },
+              { subheader: true, content: 'Bevande analcoliche'},
+              { item: 'Acqua bottiglia', ingredients: '', price: '1.20 €' },
+              { item: 'Acqua bicchiere', ingredients: '', price: '0.50 €' },
+              { item: 'Acqua tonica', ingredients: '', price: '3.50 €' },
+              { item: 'Tè freddo lattina', ingredients: '', price: '3.00 €' },
+              { item: 'Tè freddo bottiglia', ingredients: '', price: '3.50 €' },
+              { item: 'Fanta/Coca/Lemon Soda', ingredients: '', price: '3.00 €' },
+              { item: 'Aperitivo analcolico', ingredients: '', price: '3.00 €' },
+            ]} 
             renderItem={item => {
               if (item.subheader) {
                 return (
@@ -199,12 +240,16 @@ const App = () => {
                 );
               } else {
                 return (
-                  <List.Item style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <div>
-                      <Typography.Text strong>{item.item}</Typography.Text>
+                  <List.Item style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
+                      <div><strong>{item.item}</strong></div>
                       <div>{item.ingredients}</div>
                     </div>
-                    <div><Typography.Text strong>{item.price}</Typography.Text></div>
+                    {item.price && (
+                      <div style={{ marginLeft: 'auto' }}>
+                        <Typography.Text strong>{item.price}</Typography.Text>
+                      </div>
+                    )}
                   </List.Item>
                 );
               }
@@ -212,9 +257,115 @@ const App = () => {
           />
         );
       case '4':
-        return <div>Coming Soon</div>;
+        return (
+          <List
+          style={{backgroundColor: '#f2ebe4'}}
+            header={
+              <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold' }}>
+               Caffè
+              </div>
+            }
+            bordered
+            dataSource={[
+              { item: 'Caffe', ingredients: '', price: '1.30 €' },
+              { item: 'Caffe decaffeinato', ingredients: '', price: '1.50 €' },
+              { item: 'Caffe macchiato', ingredients: '', price: '1.40 €' },
+              { item: 'Caffe deca macchiato', ingredients: '', price: '1.50 €' },
+              { item: 'Cappuccino', ingredients: '', price: '1.60 €' },
+              { item: 'Cappuccino deca', ingredients: '', price: '1.70 €' },
+              { item: 'Cappuccino grande', ingredients: '', price: '2.40 €' },
+              { item: 'Macchiatone', ingredients: '', price: '1.50 €' },
+              { item: 'Macchiatone deca', ingredients: '', price: '1.60 €' },
+              { item: 'Latte macchiato', ingredients: '', price: '1.80 €' },
+              { item: 'Caffe corretto', ingredients: '', price: '2.00 €' },
+              { item: 'Cafe shakerato', ingredients: '', price: '2.50 €' },
+              { item: 'Orzo', ingredients: '', price: '1.40 €' },
+              { item: 'Orzo macchiato', ingredients: '', price: '1.50 €' },
+              { item: 'Cappuccino d`orzo', ingredients: '', price: '1.70 €' },
+              { item: 'Macchiatone d`orzo', ingredients: '', price: '1.60 €' },
+              { item: 'Ginseng', ingredients: '', price: '1.50 €' },
+              { item: 'Ginseng macchiato', ingredients: '', price: '1.60 €' },
+              { item: 'Cappuccino di ginseng', ingredients: '', price: '1.80 €' },
+              { item: 'Macchiatone di ginseng', ingredients: '', price: '1.70 €' },
+              { subheader: true, content: 'Tè'},
+              { item: 'Tè caldo', ingredients: 'nero/verde', price: '2.00 €' },
+              { item: 'Rooibos al cioccolato', ingredients: '', price: '3.50 €' },
+              { item: 'Tisana malva', ingredients: '', price: '3.50 €' },
+            ]} 
+
+            renderItem={item => {
+              if (item.subheader) {
+                return (
+                  <List.Item>
+                    <div style={{ width: '100%', textAlign: 'center', fontSize: '24px', fontWeight: 'bold' }}>
+                      {item.content}
+                    </div>
+                  </List.Item>
+                );
+              } else {
+                return (
+                  <List.Item style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
+                      <div><strong>{item.item}</strong></div>
+                      <div>{item.ingredients}</div>
+                    </div>
+                    {item.price && (
+                      <div style={{ marginLeft: 'auto' }}>
+                        <Typography.Text strong>{item.price}</Typography.Text>
+                      </div>
+                    )}
+                  </List.Item>
+                );
+              }
+            }}
+          />
+        );
       case '5':
-        return <div> Coming Soon </div>;
+        return (
+          <List
+          style={{backgroundColor: '#f2ebe4'}}
+            header={
+              <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold' }}>
+               Gelatto
+              </div>
+            }
+            bordered
+            dataSource={[
+              { item: 'Coppetta piccola', ingredients: '', price: '2.50 €' },
+              { item: 'Coppetta media', ingredients: '', price: '3.50 €' },
+              { subheader: true, content: 'Pasticceria'},
+              { item: 'Brioche', ingredients: '', price: '1.30 €' },
+              { item: 'Biscotto grande', ingredients: '', price: '1.60 €' },
+              { item: 'Biscotto piccolo', ingredients: '', price: '1.20 €' },
+            ]} 
+
+            renderItem={item => {
+              if (item.subheader) {
+                return (
+                  <List.Item>
+                    <div style={{ width: '100%', textAlign: 'center', fontSize: '24px', fontWeight: 'bold' }}>
+                      {item.content}
+                    </div>
+                  </List.Item>
+                );
+              } else {
+                return (
+                  <List.Item style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
+                      <div><strong>{item.item}</strong></div>
+                      <div>{item.ingredients}</div>
+                    </div>
+                    {item.price && (
+                      <div style={{ marginLeft: 'auto' }}>
+                        <Typography.Text strong>{item.price}</Typography.Text>
+                      </div>
+                    )}
+                  </List.Item>
+                );
+              }
+            }}
+          />
+        );
       default:
         return null;
     }
@@ -222,10 +373,10 @@ const App = () => {
 
   return (
     <Layout>
-      <Header className="header" style={{ background: '#3c2b1a', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <div className="logo">
-          <Title level={3} style={{ color: 'white', margin: 0 }}>BARIN Menu</Title>
-        </div>
+      <Header style={{ display: 'flex', alignItems: 'center', backgroundColor: '#3c2b1a' }}>
+        <Title level={3} style={{ color: '#FFFFFF', margin: 0 }}>
+          {<span>BAR</span>}<span style={{ color: '#b58569' }}>IN  </span>  Menu
+        </Title>
       </Header>
       <Content style={{ padding: '0' }}>
         <div style={{ overflowX: 'auto', whiteSpace: 'nowrap' }}>
@@ -256,7 +407,6 @@ const App = () => {
         </Content>
       <Content style={{ padding: '5px 10px', flex: 1 }}>
         <div className="site-layout-content" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-          {/* Content for each tab */}
           <div style={{ maxWidth: '100%', width: '100%' }}>
             {getMenuContent()}
           </div>
