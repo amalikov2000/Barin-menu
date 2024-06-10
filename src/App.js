@@ -25,16 +25,19 @@ const App = () => {
             bordered
             dataSource={[
               { item: 'Piatto della Settimana', ingredients: '', price: '10.00 €' },
-              { item: 'Tagliere di affettati misti', ingredients: 'crudo serrano, bresaola punta d`anca, soppressa nostrana, pancetta', price: '12.00 €' },
-              { item: 'PASTA FREDDA', ingredients: 'Lunedi - Farfalle al pesto, zucchine e pomodorini, Martedi - Penne sfilaci, pomodorini e grana, Mercoledi - Farfalle con tonno, pomodorini, capperi, Giovedi - Insalata di riso rosso con verdure alla curcuma zucchine, carote,olive ', price: '8.50 €' },
+              { item: 'Pasta al Pomodoro', ingredients: '', price: '8.00 €' },
+              { item: 'Pasta al Pesto', ingredients: '', price: '8.50 €' },
+              { item: 'Caccio e pepe', ingredients: '', price: '8.50 €' },
+              { item: 'Piatto della Settimana', ingredients: '', price: '10.00 €' },
+              { item: 'PASTA FREDDA', ingredients: 'Lunedi - Farfalle al pesto con zucchine e pomodorini, Martedi - Penne agli sfilacci con pomodorini e grana, Mercoledi - Farfalle al tonno con pomodorini e capperi, Giovedi - Insalata di riso rosso con verdure alla curcuma zucchine carote e olive', price: '8.50 €' },
               { subheader: true, content: 'Insalate' },
               { item: 'CAPRESE', ingredients: 'pomodoro cuore di bue, mozzarella fior di latte, pesto e basilico', price: '8.50 €' },
               { item: 'VASILISA', ingredients: 'insalata misticanza, finocchio, ceci, cetrioli, pomodori secchi e scaglie di grana', price: '8.50 €' },
               { item: 'VERDUROSA', ingredients: 'insalata misticanza, pomodorini, zucchine, melanzane, peperoni, avocado, broccoli, e grana', price: '8.50 €' },
               { item: 'POCAHONTAS', ingredients: 'insalata misticanza, bresaola, pomodorini, riccioli di finocchio, philadelphia e noci ', price: '10.00 €' },
               { item: 'CLASSICA', ingredients: 'insalata misticanza, carote, pomodoro, tonno e mozzarella', price: '9.00 €' },
-              { item: 'CAESAR', ingredients: 'insalata misticanza,pomodorini, stracetti di pollo, bacon croccante,salsa cesar, grana a scaglie e crostini', price: '10.00 €' },
-              { item: 'FRESCA', ingredients: 'insalata misticanza, sfilaci, uova, zucchine grigliate, grana e olive', price: '9.00 €' },
+              { item: 'CAESAR', ingredients: 'insalata misticanza,pomodorini, straccetti di pollo, bacon croccante,salsa cesar, grana a scaglie e crostini', price: '10.00 €' },
+              { item: 'FRESCA', ingredients: 'insalata misticanza, sfilacci, uova, zucchine grigliate, grana e olive', price: '9.00 €' },
               { item: 'DELICATA', ingredients: 'insalata misticanza, cetriolo, arancia, gamberetti, avocado, e mais', price: '9.00 €' },
               { item: 'DARIA', ingredients: ' insalata misticanza, carote, pomodorini, philadelphia, fesa di tacchino e semi di zucca', price: '9.00 €' },
               { subheader: true, content: 'Snack' },
@@ -47,17 +50,18 @@ const App = () => {
               { item: 'Focaccia Genovese', ingredients: 'mozzarella, zucchine grigliate e pomodoro', price: '5.00 €' },
               { item: 'Panino alla curcuma', ingredients: ' spianata calabra, rucola e formaggio', price: '5.00 €' },
               { item: 'Tostone Classico', ingredients: 'prosciutto cotto e fontina', price: '5.00 €' },
-              { item: 'Tostone ai Cereali', ingredients: 'zucchine e melanzane grligliati, spinaci e formaggio', price: '5.00 €' },
+              { item: 'Tostone ai Cereali', ingredients: 'zucchine e melanzane grigliate, spinaci e formaggio', price: '5.00 €' },
               { item: 'Toast alla Curcuma', ingredients: 'uovo sodo, avocado, bacon, pomodoro e insalata', price: '5.00 €' },
               { subheader: true, content: 'Aggiunte' },
               { item: 'Crudo/ Bresaola/ Tacchino', ingredients: '', price: '2.00 €' },
-              { item: 'Sfilaci', ingredients: '', price: '2.00 €' },
+              { item: 'Sfilacci', ingredients: '', price: '2.00 €' },
               { item: 'Mozzarella', ingredients: '', price: '2.00 €' },
               { item: 'Tonno', ingredients: '', price: '1.00 €' },
+              { item: 'Pollo', ingredients: '', price: '1.00 €' },
               { item: 'Uovo', ingredients: '', price: '1.00 €' },
               { item: 'Verdure', ingredients: '', price: '1.00 €' },
               { item: 'Grana', ingredients: '', price: '1.00 €' },
-              { item: 'Salsa Rosà/ avocado/ yogurt', ingredients: '', price: '0.50 €' },
+              { item: 'Salsa Rosa/ avocado/ yogurt', ingredients: '', price: '0.50 €' },
               
             ]}
             renderItem={item => {
@@ -113,12 +117,12 @@ const App = () => {
           style={{backgroundColor: '#f2ebe4'}}
             header={
               <div style={{ textAlign: 'center', fontSize: '24px', fontWeight: 'bold' }}>
-                Cichetti - 1.80 €
+                Cicchetti - 1.80 €
               </div>
             }
             bordered
             dataSource={[
-              { item: '', ingredients: '- Bacalà mantecato e insalatina', price: '' },
+              { item: '', ingredients: '- Baccalà mantecato e insalatina', price: '' },
               { item: '', ingredients: '- Pomodoro secco e soppressa veneta', price: '' },
               { item: '', ingredients: '- Polpetta di carne e cetriolo', price: '' },
               { item: '', ingredients: '- Polpettine di verdure e salsa piccante', price: '' },
@@ -168,7 +172,9 @@ const App = () => {
               { item: 'Vino Rosso calice', ingredients: '', price: '4.00 €' },
               { item: 'Vino Bianco calice', ingredients: '', price: '4.00 €' },
               { item: 'Prosecco calice', ingredients: '', price: '4.00 €' },
-              { item: 'Vino bottiglia', ingredients: '', price: '18.00 €' },
+              { item: 'Valpolicella bottiglia', ingredients: '', price: '25.00 €' },
+              { item: 'Lugana bottiglia', ingredients: '', price: '25.00 €' },
+              { item: 'Prosecco bottiglia', ingredients: '', price: '23.00 €' },
               { subheader: true, content: 'Digestivi'},
               { item: 'Amaro', ingredients: '', price: '3.50 €' },
               { item: 'Limoncello', ingredients: '', price: '3.50 €' },
@@ -219,7 +225,7 @@ const App = () => {
               { item: 'Mela, arancia e carota ', ingredients: '', price: '5.00 €' },
               { item: 'Arancia, limone zenzero ', ingredients: '', price: '5.00 €' },
               { item: 'Mela, carota', ingredients: '', price: '5.00 €' },
-              { item: 'Spremuta di arancia', ingredients: '', price: '5.00 €' },
+              { item: 'Spremuta di arancia', ingredients: '', price: '4.00 €' },
               { subheader: true, content: 'Bevande analcoliche'},
               { item: 'Acqua bottiglia', ingredients: '', price: '1.20 €' },
               { item: 'Acqua bicchiere', ingredients: '', price: '0.50 €' },
@@ -391,16 +397,16 @@ const App = () => {
               Lunch
             </Menu.Item>
             <Menu.Item key="2">
-            Aperetivi
+            Aperitivi
             </Menu.Item>
             <Menu.Item key="3">
               Bibite
             </Menu.Item>
             <Menu.Item key="4">
-              Caffeteria
+              Caffetteria
             </Menu.Item>
             <Menu.Item key="5">
-              Dolce
+              Dolci
             </Menu.Item>
           </Menu>
         </div>
