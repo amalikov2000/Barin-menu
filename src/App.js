@@ -24,24 +24,21 @@ const App = () => {
             }
             bordered
             dataSource={[
-              { item: 'Penne all`arrabbiata', ingredients: '', price: '7.50 €' },
-              { item: 'Penne con salsa al pomodoro, olive, capperi', ingredients: '', price: '8.50 €' },
-              { item: 'Rigatoni con pesto alla genovese', ingredients: '', price: '8.50 €' },
-              { item: 'Rigatoni alla cacio e pepe e bacon croccante ', ingredients: '', price: '8.50 €' },
-              { item: 'Pasta fredda', ingredients: '', price: '8.50 €' },
+              { item: 'Pasta Pomodoro/Arrabbiata', ingredients: '', price: '8.00 €' },
+              { item: 'Pasta Cacio e Pepe', ingredients: '', price: '8.50 €' },
+              { item: 'Pasta con pesto, zucchine e noci', ingredients: '', price: '8.50 €' },
+              { item: 'Pasta con Ragu', ingredients: '', price: '8.50 €' },
               { subheader: true, content: 'Secondi Piatti' },
               { item: 'Proposta della settimana', ingredients: '', price: '10.00 €' },
+              { item: 'Piatto di verdure con uovo sodo / mozzarella', ingredients: '', price: '10.00 €' },
               { item: 'Tagliere di affettati misti', ingredients: 'crudo serrano, bresaola punta d`anca, soppressa nostrana, pancetta', price: '12.00 €' },
               { subheader: true, content: 'Insalate' },
-              { item: 'CAPRESE', ingredients: 'pomodorini, mozzarella fior di latte, pesto e basilico', price: '8.50 €' },
               { item: 'VASILISA', ingredients: 'insalata misticanza, finocchio, ceci, cetrioli, pomodori secchi e scaglie di grana', price: '8.50 €' },
               { item: 'VERDUROSA', ingredients: 'insalata misticanza, pomodorini, zucchine, melanzane, peperoni, avocado, broccoli e grana', price: '8.50 €' },
               { item: 'POCAHONTAS', ingredients: 'insalata misticanza, bresaola, pomodorini, riccioli di finocchio, philadelphia e noci ', price: '10.00 €' },
               { item: 'CLASSICA', ingredients: 'insalata misticanza, carote, pomodoro, tonno e mozzarella', price: '9.00 €' },
               { item: 'CAESAR', ingredients: 'insalata misticanza, pomodorini, straccetti di pollo, bacon croccante, salsa caesar, grana a scaglie e crostini', price: '10.00 €' },
               { item: 'FRESCA', ingredients: 'insalata misticanza, sfilacci, uova, zucchine grigliate, pomodorini, grana e olive', price: '9.00 €' },
-              { item: 'DELICATA', ingredients: 'insalata misticanza, cetrioli, arancia, gamberetti, avocado e mais', price: '9.00 €' },
-              { item: 'DARIA', ingredients: ' insalata misticanza, carote, pomodorini, philadelphia, fesa di tacchino e semi di zucca', price: '9.00 €' },
               { subheader: true, content: 'Snack' },
               { item: 'Tramezzini ', ingredients: '', price: '2.50 €' },
               { item: 'Piadina col crudo', ingredients: 'crudo serrano e mozzarella filante', price: '5.00 €' },
@@ -230,7 +227,7 @@ const App = () => {
               { item: 'Tè freddo lattina', ingredients: '', price: '3.00 €' },
               { item: 'Tè freddo bottiglia', ingredients: '', price: '3.50 €' },
               { item: 'Fanta / Coca / Lemon Soda', ingredients: '', price: '3.00 €' },
-              { item: 'Aperitivo analcolico', ingredients: '', price: '3.00 €' },
+              { item: 'Aperitivo analcolico', ingredients: '', price: '4.00 €' },
             ]} 
             renderItem={item => {
               if (item.subheader) {
