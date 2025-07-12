@@ -39,7 +39,7 @@ const App = () => {
               { item: 'CLASSICA', ingredients: 'insalata misticanza, carote, pomodoro, tonno e mozzarella', price: '10.00 €' },
               { item: 'CAESAR', ingredients: 'insalata misticanza, pomodorini, straccetti di pollo, bacon croccante, salsa caesar, grana a scaglie e crostini', price: '10.00 €' },
               { item: 'FRESCA', ingredients: 'insalata misticanza, sfilacci, uova, zucchine grigliate, pomodorini, grana e olive', price: '10.00 €' },
-              { item: 'VARVARA', ingredients: 'insalata misticanza, barbabietola, Rucola, avocado, feta, noci', price: '9.00 €' },
+              { item: 'VARVARA', ingredients: 'rucola, barbabietola, avocado, feta, noci', price: '9.00 €' },
               { item: 'ANASTASIA', ingredients: 'insalata misticanza, feta, pomodorini, cetrioli, peperone, olive', price: '9.00 €' },
               { item: 'AGLAYA', ingredients: 'insalata misticanza, burratina, pomodorini secchi, rucola, zucchine, noci', price: '11.00 €' },
               { subheader: true, content: 'Snack' },
