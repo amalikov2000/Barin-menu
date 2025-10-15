@@ -24,12 +24,16 @@ const App = () => {
             }
             bordered
             dataSource={[
-              { item: 'Pasta fredda', ingredients: '', price: '9.00 €' },
-              { item: 'Farro con verdurine', ingredients: '', price: '9.00 €' },
+              { item: 'Pasta Pomodoro', ingredients: '', price: '8.80 €' },
+              { item: 'Pasta Arrabbiata', ingredients: '', price: '8.80 €' },
+              { item: 'Pasta pesto zucchine noci', ingredients: '', price: '9.80 €' },
+              { item: 'Pasta cacio pepe', ingredients: '', price: '9.80 €' },
+              { item: 'Riso con verdure', ingredients: '', price: '9.00 €' },
               { subheader: true, content: 'Secondi Piatti' },
-              { item: 'Vitello tonnato', ingredients: '', price: '12.00 €' },
               { item: 'Bresaola, rucola e grana', ingredients: '', price: '12.00 €' },
               { item: 'Crudo serrano e burratina', ingredients: '', price: '12.00 €' },
+              { item: 'Piatto vegetariano', ingredients: '', price: '8.50 €' },
+              { item: 'Piatto vegetariano e burratina', ingredients: '', price: '11.00 €' },
               { item: 'Tagliere di affettati misti', ingredients: 'crudo serrano, bresaola punta d`anca, soppressa nostrana, pancetta', price: '14.00 €' },
               { subheader: true, content: 'Insalate' },
               { item: 'CAPRESE', ingredients: 'pomodori, mozarella, pesto, rucola', price: '8.50 €' },
@@ -39,7 +43,6 @@ const App = () => {
               { item: 'CLASSICA', ingredients: 'insalata misticanza, carote, pomodoro, tonno e mozzarella', price: '10.00 €' },
               { item: 'CAESAR', ingredients: 'insalata misticanza, pomodorini, straccetti di pollo, bacon croccante, salsa caesar, grana a scaglie e crostini', price: '10.00 €' },
               { item: 'FRESCA', ingredients: 'insalata misticanza, sfilacci, uova, zucchine grigliate, pomodorini, grana e olive', price: '10.00 €' },
-              { item: 'VARVARA', ingredients: 'rucola, barbabietola, avocado, feta, noci', price: '9.00 €' },
               { item: 'ANASTASIA', ingredients: 'insalata misticanza, feta, pomodorini, cetrioli, peperone, olive', price: '9.00 €' },
               { item: 'AGLAYA', ingredients: 'insalata misticanza, burratina, pomodorini secchi, rucola, zucchine, noci', price: '11.00 €' },
               { subheader: true, content: 'Snack' },
