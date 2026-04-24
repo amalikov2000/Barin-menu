@@ -46,6 +46,7 @@ const App = () => {
               { item: 'AGLAYA', ingredients: 'insalata misticanza, burratina, pomodorini secchi, rucola, zucchine, noci', price: '11.00 €' },
               { item: 'MESSICANA', ingredients: 'insalata misticanza, fagioli rossi, uovo, bacon, grana, salsa yoghurt, salsa guacamole, cips di mais', price: '10.00 €' },
               { item: 'NATALIA', ingredients: 'insalata misticanza, tonno, uovo, avocado, cetrioli, semi di zucca', price: '10.00 €' },
+              { item: 'SASHA', ingredients: 'insalata misticanza, finocchio, crudo, philadelphia, prugne secche , noci', price: '10.00 €' },
               { subheader: true, content: 'Snack' },
               { item: 'Tramezzini', ingredients: '', price: '2.50 €' },
               { item: 'Piadina col crudo', ingredients: 'crudo serrano e mozzarella filante', price: '6.00 €' },
