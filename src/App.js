@@ -3,7 +3,9 @@ import bundledMenu from './menu.json';
 import PublicMenu from './Menu';
 import Admin from './Admin';
 
-const isAdminRoute = () => window.location.pathname.replace(/\/+$/, '') === '/admin';
+import { ADMIN_PATH } from './adminPath';
+
+const isAdminRoute = () => window.location.pathname.replace(/\/+$/, '') === ADMIN_PATH;
 
 const App = () => {
   // Wait for the live menu so guests never see stale prices; fall back to the bundled copy if the API fails.

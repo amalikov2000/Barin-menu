@@ -73,9 +73,6 @@ function validateAndMerge(current, incoming) {
   return result;
 }
 
-// Best-effort throttle (per warm instance) + constant delay on every failure.
-const failures = new Map();
-
 export default async (req) => {
   try {
     const path = new URL(req.url).pathname;
@@ -85,17 +82,11 @@ export default async (req) => {
     if (!process.env.ADMIN_PASSWORD) return json(500, { error: 'ADMIN_PASSWORD is not configured' });
 
     if (req.method === 'POST' && path === '/api/login') {
-      const ip = req.headers.get('x-nf-client-connection-ip') || 'local';
-      const f = failures.get(ip);
-      if (f && f.until > Date.now()) return json(429, { error: 'Too many attempts, try later' });
       const body = await req.json().catch(() => ({}));
       if (typeof body.password === 'string' && safeEqual(body.password, process.env.ADMIN_PASSWORD)) {
-        failures.delete(ip);
         return json(200, { token: makeToken() });
       }
-      const count = (f ? f.count : 0) + 1;
-      failures.set(ip, { count, until: count >= 5 ? Date.now() + 5 * 60 * 1000 : 0 });
-      await sleep(800);
+      await sleep(300); // tiny pause on a wrong password; never blocks anyone
       return json(401, { error: 'Wrong password' });
     }
 
