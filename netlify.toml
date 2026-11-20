@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[functions]
+  directory = "netlify/functions"
+
+# Let /admin (and any other client-side route) load the React app.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

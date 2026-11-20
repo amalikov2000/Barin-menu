@@ -1,0 +1,895 @@
+{
+  "categories": [
+    {
+      "id": "1",
+      "label": "Lunch",
+      "title": "Primi Piatti",
+      "items": [
+        {
+          "type": "item",
+          "name": "Pasta Pomodoro",
+          "ingredients": "",
+          "price": "8.80 €"
+        },
+        {
+          "type": "item",
+          "name": "Pasta Arrabbiata",
+          "ingredients": "",
+          "price": "8.80 €"
+        },
+        {
+          "type": "item",
+          "name": "Pasta pesto zucchine noci",
+          "ingredients": "",
+          "price": "9.80 €"
+        },
+        {
+          "type": "item",
+          "name": "Pasta cacio pepe",
+          "ingredients": "",
+          "price": "9.80 €"
+        },
+        {
+          "type": "item",
+          "name": "Riso con verdure",
+          "ingredients": "",
+          "price": "9.00 €"
+        },
+        {
+          "type": "subheader",
+          "content": "Secondi Piatti"
+        },
+        {
+          "type": "item",
+          "name": "Bresaola, rucola e grana",
+          "ingredients": "",
+          "price": "12.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Crudo serrano e burratina",
+          "ingredients": "",
+          "price": "12.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Piatto vegetariano",
+          "ingredients": "",
+          "price": "8.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Piatto vegetariano e burratina",
+          "ingredients": "",
+          "price": "11.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Tagliere di affettati misti",
+          "ingredients": "crudo serrano, bresaola punta d`anca, soppressa nostrana, pancetta",
+          "price": "14.00 €"
+        },
+        {
+          "type": "subheader",
+          "content": "Insalate"
+        },
+        {
+          "type": "item",
+          "name": "CAPRESE",
+          "ingredients": "pomodori, mozarella, pesto, rucola",
+          "price": "8.50 €"
+        },
+        {
+          "type": "item",
+          "name": "VASILISA",
+          "ingredients": "insalata misticanza, finocchio, ceci, cetrioli, pomodori secchi e scaglie di grana",
+          "price": "9.00 €"
+        },
+        {
+          "type": "item",
+          "name": "VERDUROSA",
+          "ingredients": "insalata misticanza, pomodorini, zucchine, melanzane, peperoni, avocado, broccoli e grana",
+          "price": "9.00 €"
+        },
+        {
+          "type": "item",
+          "name": "POCAHONTAS",
+          "ingredients": "insalata misticanza, bresaola, pomodorini, riccioli di finocchio, philadelphia e noci ",
+          "price": "10.00 €"
+        },
+        {
+          "type": "item",
+          "name": "CLASSICA",
+          "ingredients": "insalata misticanza, carote, pomodoro, tonno e mozzarella",
+          "price": "10.00 €"
+        },
+        {
+          "type": "item",
+          "name": "CAESAR",
+          "ingredients": "insalata misticanza, pomodorini, straccetti di pollo, bacon croccante, salsa caesar, grana a scaglie e crostini",
+          "price": "10.00 €"
+        },
+        {
+          "type": "item",
+          "name": "FRESCA",
+          "ingredients": "insalata misticanza, sfilacci, uova, pomodorini, grana e olive",
+          "price": "10.00 €"
+        },
+        {
+          "type": "item",
+          "name": "AGLAYA",
+          "ingredients": "insalata misticanza, burratina, pomodorini secchi, rucola, zucchine, noci",
+          "price": "11.00 €"
+        },
+        {
+          "type": "item",
+          "name": "MESSICANA",
+          "ingredients": "insalata misticanza, fagioli rossi, uovo, bacon, grana, salsa yoghurt, salsa guacamole, cips di mais",
+          "price": "10.00 €"
+        },
+        {
+          "type": "item",
+          "name": "NATALIA",
+          "ingredients": "insalata misticanza, tonno, uovo, avocado, cetrioli, semi di zucca",
+          "price": "10.00 €"
+        },
+        {
+          "type": "item",
+          "name": "SASHA",
+          "ingredients": "insalata misticanza, finocchio, crudo, philadelphia, prugne secche , noci",
+          "price": "10.00 €"
+        },
+        {
+          "type": "subheader",
+          "content": "Snack"
+        },
+        {
+          "type": "item",
+          "name": "Tramezzini",
+          "ingredients": "",
+          "price": "2.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Piadina col crudo",
+          "ingredients": "crudo serrano e mozzarella filante",
+          "price": "6.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Piadina col cotto",
+          "ingredients": "prosciutto cotto, mozzarella",
+          "price": "5.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Piadina vegetariana",
+          "ingredients": "mozzarella, pomodoro, melanzane grigliate e grana",
+          "price": "5.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Piadina con bresaola",
+          "ingredients": "bresaola, zucchine, mozzarella e grana",
+          "price": "6.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Panino soppressa",
+          "ingredients": "soppressa e fontina",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Panino vegetariano",
+          "ingredients": "mozzarella, zucchine grigliate e pomodoro",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Panino spianata",
+          "ingredients": " spianata calabra, rucola e formaggio",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Panino crudo",
+          "ingredients": "crudo, mozzarella, melanzane",
+          "price": "6.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Panino bresaola",
+          "ingredients": "bresaola, rucola, pomodoro",
+          "price": "5.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Panino burrata",
+          "ingredients": "crudo, burrata, rucola",
+          "price": "8.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Tostone classico",
+          "ingredients": "prosciutto cotto e fontina",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Tostone ai cereali",
+          "ingredients": "zucchine e melanzane grigliate, spinaci e formaggio",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Tostone alla curcuma",
+          "ingredients": "uovo sodo, avocado, bacon, pomodoro, formaggio edamer e insalata",
+          "price": "6.50 €"
+        },
+        {
+          "type": "subheader",
+          "content": "Aggiunte"
+        },
+        {
+          "type": "item",
+          "name": "Crudo/ Bresaola/ Tacchino/ Mozzarella/ Sfilacci",
+          "ingredients": "",
+          "price": "2.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Tonno/ Pollo/ Uovo/ Verdure/ Grana",
+          "ingredients": "",
+          "price": "1.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Salsa rosa/ Avocado/ Yoghurt",
+          "ingredients": "",
+          "price": "0.50 €"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "label": "Aperitivi",
+      "title": "Cicchetti - 1.80 €",
+      "items": [
+        {
+          "type": "item",
+          "name": "",
+          "ingredients": "- Baccalà mantecato e insalatina",
+          "price": ""
+        },
+        {
+          "type": "item",
+          "name": "",
+          "ingredients": "- Pomodoro secco e soppressa veneta",
+          "price": ""
+        },
+        {
+          "type": "item",
+          "name": "",
+          "ingredients": "- Polpetta di carne e cetrioli",
+          "price": ""
+        },
+        {
+          "type": "item",
+          "name": "",
+          "ingredients": "- Polpettine di verdure e salsa piccante",
+          "price": ""
+        },
+        {
+          "type": "subheader",
+          "content": "Aperitivo classico"
+        },
+        {
+          "type": "item",
+          "name": "Bianco",
+          "ingredients": "",
+          "price": "4.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Aperol",
+          "ingredients": "",
+          "price": "4.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Campari",
+          "ingredients": "",
+          "price": "4.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Select",
+          "ingredients": "",
+          "price": "4.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Misto",
+          "ingredients": "",
+          "price": "4.50 €"
+        },
+        {
+          "type": "item",
+          "name": "P31",
+          "ingredients": "",
+          "price": "4.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Hugo",
+          "ingredients": "",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Campari gin",
+          "ingredients": "",
+          "price": "5.00 €"
+        },
+        {
+          "type": "subheader",
+          "content": "Spritz Speciali"
+        },
+        {
+          "type": "item",
+          "name": "Limoncello",
+          "ingredients": "limoncello, succo di limone, sciroppo di zucchero, prosecco, seltz",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Maracuja",
+          "ingredients": "sciroppo maracuja, prosecco, seltz, Passoa ",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Curaçao",
+          "ingredients": "blue curaçao, lemonsoda, vodka ",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Lemon",
+          "ingredients": "Campari, lemonsoda, gin ",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Havana ",
+          "ingredients": "Campari, succo d’arancia, rum ",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Montenegro ",
+          "ingredients": "Aperol, Montenegro, prosecco, seltz ",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Pumpkin",
+          "ingredients": "liquore di zucca, Aperol, prosecco, seltz ",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Esmerald ",
+          "ingredients": "P31, ginger beer, vodka",
+          "price": "5.00 €"
+        },
+        {
+          "type": "subheader",
+          "content": "Cocktails"
+        },
+        {
+          "type": "item",
+          "name": "Bellini",
+          "ingredients": "",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Black Russian",
+          "ingredients": "",
+          "price": "7.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Gin Tonic",
+          "ingredients": "",
+          "price": "7.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Gin Lemon",
+          "ingredients": "",
+          "price": "7.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Gin Fizz",
+          "ingredients": "",
+          "price": "7.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Vodka Lemon",
+          "ingredients": "",
+          "price": "7.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Vodka Sour",
+          "ingredients": "",
+          "price": "7.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Cuba Libre",
+          "ingredients": "",
+          "price": "7.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Americano",
+          "ingredients": "",
+          "price": "7.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Negroni",
+          "ingredients": "",
+          "price": "8.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Quattro Bianchi",
+          "ingredients": "",
+          "price": "8.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Moscow Mule",
+          "ingredients": "",
+          "price": "8.00 €"
+        },
+        {
+          "type": "item",
+          "name": "London Mule",
+          "ingredients": "",
+          "price": "8.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Espresso Martini",
+          "ingredients": "",
+          "price": "8.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Whiskey Sour",
+          "ingredients": "",
+          "price": "8.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Boulevardier",
+          "ingredients": "",
+          "price": "8.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Old Fashioned",
+          "ingredients": "",
+          "price": "8.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Paloma",
+          "ingredients": "",
+          "price": "8.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Caipirinha",
+          "ingredients": "",
+          "price": "8.00 €"
+        },
+        {
+          "type": "subheader",
+          "content": "Birre"
+        },
+        {
+          "type": "item",
+          "name": "Birra Leffe rouge",
+          "ingredients": "",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Birra piccola",
+          "ingredients": "",
+          "price": "3.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Birra media",
+          "ingredients": "",
+          "price": "5.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Birra rossa piccola",
+          "ingredients": "",
+          "price": "4.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Birra rossa media",
+          "ingredients": "",
+          "price": "5.50 €"
+        },
+        {
+          "type": "subheader",
+          "content": "Vino"
+        },
+        {
+          "type": "item",
+          "name": "Vino rosso calice",
+          "ingredients": "",
+          "price": "4.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Vino bianco calice",
+          "ingredients": "",
+          "price": "4.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Prosecco calice",
+          "ingredients": "",
+          "price": "4.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Valpolicella bottiglia",
+          "ingredients": "",
+          "price": "25.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Lugana bottiglia",
+          "ingredients": "",
+          "price": "25.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Prosecco bottiglia",
+          "ingredients": "",
+          "price": "23.00 €"
+        },
+        {
+          "type": "subheader",
+          "content": "Shot"
+        },
+        {
+          "type": "item",
+          "name": "Amaro",
+          "ingredients": "",
+          "price": "3.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Limoncello",
+          "ingredients": "",
+          "price": "3.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Grappa",
+          "ingredients": "",
+          "price": "4.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Tequila",
+          "ingredients": "",
+          "price": "4.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Vodka",
+          "ingredients": "",
+          "price": "3.50 €"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "label": "Bibite",
+      "title": "Centrifughe",
+      "items": [
+        {
+          "type": "item",
+          "name": "Spremuta di arancia",
+          "ingredients": "",
+          "price": "4.00 €"
+        },
+        {
+          "type": "subheader",
+          "content": "Bevande analcoliche"
+        },
+        {
+          "type": "item",
+          "name": "Acqua bottiglia 0,5 l",
+          "ingredients": "",
+          "price": "1.30 €"
+        },
+        {
+          "type": "item",
+          "name": "Acqua bottiglia 1 l",
+          "ingredients": "",
+          "price": "2.20 €"
+        },
+        {
+          "type": "item",
+          "name": "Acqua bicchiere",
+          "ingredients": "",
+          "price": "0.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Acqua tonica",
+          "ingredients": "",
+          "price": "3.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Tè freddo bottiglia",
+          "ingredients": "",
+          "price": "3.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Fanta / Coca / Lemon Soda",
+          "ingredients": "",
+          "price": "3.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Aperitivo analcolico",
+          "ingredients": "",
+          "price": "4.00 €"
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "label": "Caffetteria",
+      "title": "Caffè",
+      "items": [
+        {
+          "type": "item",
+          "name": "Caffè",
+          "ingredients": "",
+          "price": "1.30 €"
+        },
+        {
+          "type": "item",
+          "name": "Caffè decaffeinato",
+          "ingredients": "",
+          "price": "1.40 €"
+        },
+        {
+          "type": "item",
+          "name": "Caffè macchiato",
+          "ingredients": "",
+          "price": "1.20 €"
+        },
+        {
+          "type": "item",
+          "name": "Caffè deca macchiato",
+          "ingredients": "",
+          "price": "1.30 €"
+        },
+        {
+          "type": "item",
+          "name": "Cappuccino",
+          "ingredients": "",
+          "price": "1.60 €"
+        },
+        {
+          "type": "item",
+          "name": "Cappuccino deca",
+          "ingredients": "",
+          "price": "1.70 €"
+        },
+        {
+          "type": "item",
+          "name": "Cappuccino grande",
+          "ingredients": "",
+          "price": "2.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Raf caffè",
+          "ingredients": "",
+          "price": "3.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Bumble caffè",
+          "ingredients": "",
+          "price": "3.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Espresso tonic",
+          "ingredients": "",
+          "price": "3.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Macchiatone",
+          "ingredients": "",
+          "price": "1.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Macchiatone deca",
+          "ingredients": "",
+          "price": "1.60 €"
+        },
+        {
+          "type": "item",
+          "name": "Latte macchiato",
+          "ingredients": "",
+          "price": "2.10 €"
+        },
+        {
+          "type": "item",
+          "name": "Caffè corretto",
+          "ingredients": "",
+          "price": "2.30 €"
+        },
+        {
+          "type": "item",
+          "name": "Caffè shakerato",
+          "ingredients": "",
+          "price": "3.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Orzo",
+          "ingredients": "",
+          "price": "1.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Orzo macchiato",
+          "ingredients": "",
+          "price": "1.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Cappuccino d`orzo",
+          "ingredients": "",
+          "price": "1.80 €"
+        },
+        {
+          "type": "item",
+          "name": "Macchiatone d`orzo",
+          "ingredients": "",
+          "price": "1.70 €"
+        },
+        {
+          "type": "item",
+          "name": "Ginseng",
+          "ingredients": "",
+          "price": "1.60 €"
+        },
+        {
+          "type": "item",
+          "name": "Ginseng macchiato",
+          "ingredients": "",
+          "price": "1.60 €"
+        },
+        {
+          "type": "item",
+          "name": "Cappuccino di ginseng",
+          "ingredients": "",
+          "price": "1.80 €"
+        },
+        {
+          "type": "item",
+          "name": "Macchiatone di ginseng",
+          "ingredients": "",
+          "price": "1.70 €"
+        },
+        {
+          "type": "subheader",
+          "content": "Tè"
+        },
+        {
+          "type": "item",
+          "name": "Tè caldo",
+          "ingredients": "nero/ verde/ mora e lampone",
+          "price": "2.00 €"
+        },
+        {
+          "type": "item",
+          "name": "Rooibos al cioccolato",
+          "ingredients": "",
+          "price": "3.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Tisana malva",
+          "ingredients": "",
+          "price": "3.50 €"
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "label": "Dolci",
+      "title": "Gelato",
+      "items": [
+        {
+          "type": "item",
+          "name": "Coppetta / Cono piccola",
+          "ingredients": "",
+          "price": "2.50 €"
+        },
+        {
+          "type": "item",
+          "name": "Coppetta / Cono media",
+          "ingredients": "",
+          "price": "3.50 €"
+        },
+        {
+          "type": "subheader",
+          "content": "Pasticceria"
+        },
+        {
+          "type": "item",
+          "name": "Brioche vuota",
+          "ingredients": "",
+          "price": "1.60 €"
+        },
+        {
+          "type": "item",
+          "name": "Brioche farcita",
+          "ingredients": "",
+          "price": "1.60 €"
+        },
+        {
+          "type": "item",
+          "name": "Biscotto grande",
+          "ingredients": "",
+          "price": "1.70 €"
+        },
+        {
+          "type": "item",
+          "name": "Biscotto piccolo",
+          "ingredients": "",
+          "price": "1.10 €"
+        },
+        {
+          "type": "item",
+          "name": "Muffin senza glutine",
+          "ingredients": "",
+          "price": "4.00 €"
+        }
+      ]
+    }
+  ]
+}
