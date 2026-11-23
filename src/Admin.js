@@ -18,8 +18,11 @@ const STRINGS = {
     loading: 'Загрузка…',
     loadError: 'Не удалось загрузить меню (сервер недоступен)',
     newItem: 'Новая позиция',
+    editItem: 'Изменить позицию',
+    edit: 'Изменить',
+    apply: 'Применить',
     dishName: 'Название блюда',
-    dishNameReq: 'Введите название',
+    dishNameReq: 'Введите название или описание',
     ingredients: 'Описание состава',
     price: 'Цена, €',
     priceReq: 'Введите цену',
@@ -41,6 +44,7 @@ const STRINGS = {
     save: 'Сохранить',
     saved: 'Сохранено. Меню обновлено.',
     added: 'Позиция добавлена. Нажмите «Сохранить», чтобы она появилась в меню.',
+    edited: 'Изменения применены. Нажмите «Сохранить», чтобы они появились в меню.',
     sessionExpired: 'Сессия истекла, войдите снова',
     saveError: 'Ошибка сохранения',
     emptyTitles: 'Заголовки не могут быть пустыми',
@@ -54,8 +58,11 @@ const STRINGS = {
     loading: 'Caricamento…',
     loadError: 'Impossibile caricare il menu (server non raggiungibile)',
     newItem: 'Nuovo piatto',
+    editItem: 'Modifica piatto',
+    edit: 'Modifica',
+    apply: 'Applica',
     dishName: 'Nome del piatto',
-    dishNameReq: 'Inserisci il nome',
+    dishNameReq: 'Inserisci il nome o la descrizione',
     ingredients: 'Descrizione / ingredienti',
     price: 'Prezzo, €',
     priceReq: 'Inserisci il prezzo',
@@ -77,6 +84,7 @@ const STRINGS = {
     save: 'Salva',
     saved: 'Salvato. Menu aggiornato.',
     added: 'Piatto aggiunto. Premi «Salva» per pubblicarlo nel menu.',
+    edited: 'Modifiche applicate. Premi «Salva» per pubblicarle nel menu.',
     sessionExpired: 'Sessione scaduta, accedi di nuovo',
     saveError: 'Errore di salvataggio',
     emptyTitles: 'I titoli non possono essere vuoti',
@@ -163,10 +171,11 @@ const Login = ({ onLogin }) => {
   );
 };
 
-const AddItemModal = ({ category, onCancel, onAdd }) => {
+// One dialog for both cases: `item` given -> edit that dish, otherwise add a new one to `category`.
+const ItemModal = ({ open, category, item, onCancel, onSubmit }) => {
   const t = useT();
   const [form] = Form.useForm();
-  const open = !!category;
+  const editing = !!item;
 
   const sections = useMemo(() => {
     if (!category) return [];
@@ -178,19 +187,32 @@ const AddItemModal = ({ category, onCancel, onAdd }) => {
   }, [category]);
 
   useEffect(() => {
-    if (open) form.setFieldsValue({ name: '', ingredients: '', price: null, section: sections[sections.length - 1].value });
-  }, [open, sections, form]);
+    if (!open) return;
+    if (editing) {
+      form.setFieldsValue({ name: item.name, ingredients: item.ingredients, price: parsePrice(item.price) });
+    } else {
+      form.setFieldsValue({ name: '', ingredients: '', price: null, section: sections[sections.length - 1].value });
+    }
+  }, [open, editing, item, sections, form]);
 
   const ok = async () => {
     const values = await form.validateFields().catch(() => null);
-    if (values) onAdd(values);
+    if (values) onSubmit(values);
+  };
+
+  // some existing dishes (e.g. the cicchetti list) have no name, only a description
+  const nameOrDescription = {
+    validator: (_, v) =>
+      (v && v.trim()) || (form.getFieldValue('ingredients') || '').trim()
+        ? Promise.resolve()
+        : Promise.reject(new Error(t.dishNameReq)),
   };
 
   return (
     <Modal
       open={open}
-      title={`${t.newItem} — ${category ? category.label : ''}`}
-      okText={t.add}
+      title={`${editing ? t.editItem : t.newItem} — ${category ? category.label : ''}`}
+      okText={editing ? t.apply : t.add}
       cancelText={t.cancel}
       onOk={ok}
       onCancel={onCancel}
@@ -198,22 +220,20 @@ const AddItemModal = ({ category, onCancel, onAdd }) => {
       forceRender
     >
       <Form form={form} layout="vertical" requiredMark={false}>
-        <Form.Item
-          name="name"
-          label={t.dishName}
-          rules={[{ required: true, whitespace: true, message: t.dishNameReq }, { max: 100 }]}
-        >
+        <Form.Item name="name" label={t.dishName} dependencies={['ingredients']} rules={[nameOrDescription, { max: 100 }]}>
           <Input maxLength={100} autoFocus />
         </Form.Item>
         <Form.Item name="ingredients" label={t.ingredients} rules={[{ max: 300 }]}>
           <Input.TextArea rows={3} maxLength={300} />
         </Form.Item>
-        <Form.Item name="price" label={t.price} rules={[{ required: true, message: t.priceReq }]}>
+        <Form.Item name="price" label={t.price} rules={editing ? [] : [{ required: true, message: t.priceReq }]}>
           <InputNumber min={0} max={999} step={0.1} precision={2} addonAfter="€" inputMode="decimal" style={{ width: 160 }} />
         </Form.Item>
-        <Form.Item name="section" label={t.subsection}>
-          <Select options={sections} />
-        </Form.Item>
+        {!editing && (
+          <Form.Item name="section" label={t.subsection}>
+            <Select options={sections} />
+          </Form.Item>
+        )}
       </Form>
     </Modal>
   );
@@ -226,9 +246,10 @@ const Editor = ({ token, onLogout }) => {
   const [loadError, setLoadError] = useState(false);
   const [saving, setSaving] = useState(false);
   const [search, setSearch] = useState('');
-  const [adding, setAdding] = useState(null); // index of the category being added to
+  const [dialog, setDialog] = useState(null); // { ci, ii? } — ii present when editing an existing dish
   const [activeTab, setActiveTab] = useState(null);
   const newCounter = useRef(0);
+  const lastDialog = useRef(null);
   const [msg, ctx] = message.useMessage();
 
   const load = (m) => { const k = withKeys(m); setSaved(k); setDraft(k); };
@@ -240,27 +261,29 @@ const Editor = ({ token, onLogout }) => {
       .catch(() => setLoadError(true));
   }, []);
 
-  // saved value per item: price for dishes, text for sub-headers
-  const savedValues = useMemo(() => {
+  // last saved version of every item, by client id
+  const savedItems = useMemo(() => {
     const map = {};
-    if (saved) saved.categories.forEach((c) => c.items.forEach((it) => {
-      map[it._k] = it.type === 'subheader' ? it.content : it.price;
-    }));
+    if (saved) saved.categories.forEach((c) => c.items.forEach((it) => { map[it._k] = it; }));
     return map;
   }, [saved]);
+
+  const itemChanged = useCallback((it) => {
+    const s = savedItems[it._k];
+    if (it.isNew || !s) return true;
+    if (it.type === 'subheader') return it.content !== s.content;
+    return it.price !== s.price || it.name !== s.name || it.ingredients !== s.ingredients;
+  }, [savedItems]);
 
   const changes = useMemo(() => {
     if (!saved || !draft) return 0;
     let n = 0;
     draft.categories.forEach((c, ci) => {
       if (c.title !== saved.categories[ci].title) n++;
-      c.items.forEach((it) => {
-        if (it.type === 'subheader') { if (it.content !== savedValues[it._k]) n++; return; }
-        if (it.isNew || it.price !== savedValues[it._k]) n++;
-      });
+      c.items.forEach((it) => { if (itemChanged(it)) n++; });
     });
     return n;
-  }, [saved, draft, savedValues]);
+  }, [saved, draft, itemChanged]);
 
   const hasEmptyTitle = useMemo(
     () => !!draft && draft.categories.some((c) => !c.title.trim() || c.items.some((it) => it.type === 'subheader' && !it.content.trim())),
@@ -287,8 +310,18 @@ const Editor = ({ token, onLogout }) => {
 
   const removeNew = (ci, ii) => update(ci, (c) => ({ ...c, items: c.items.filter((_, i) => i !== ii) }));
 
-  const addItem = (values) => {
-    const ci = adding;
+  const submitDialog = (values) => {
+    const { ci, ii } = dialog;
+    if (ii !== undefined) {
+      patchItem(ci, ii, {
+        name: (values.name || '').trim(),
+        ingredients: (values.ingredients || '').trim(),
+        price: formatPrice(values.price),
+      });
+      setDialog(null);
+      msg.success(t.edited);
+      return;
+    }
     update(ci, (c) => {
       let at = c.items.length; // insert at the end of the chosen sub-section
       for (let i = values.section + 1; i < c.items.length; i++) {
@@ -297,7 +330,7 @@ const Editor = ({ token, onLogout }) => {
       newCounter.current += 1;
       const item = {
         type: 'item',
-        name: values.name.trim(),
+        name: (values.name || '').trim(),
         ingredients: (values.ingredients || '').trim(),
         price: formatPrice(values.price),
         _k: `n${newCounter.current}`,
@@ -306,7 +339,7 @@ const Editor = ({ token, onLogout }) => {
       return { ...c, items: [...c.items.slice(0, at), item, ...c.items.slice(at)] };
     });
     setSearch('');
-    setAdding(null);
+    setDialog(null);
     msg.success(t.added);
   };
 
@@ -355,7 +388,7 @@ const Editor = ({ token, onLogout }) => {
               onChange={(e) => update(ci, (c) => ({ ...c, title: e.target.value }))}
             />
             {cat.title !== saved.categories[ci].title && <Tag color="orange">{t.changedTag}</Tag>}
-            <Button type="primary" shape="circle" size="large" title={t.addTitle} onClick={() => setAdding(ci)}>
+            <Button type="primary" shape="circle" size="large" title={t.addTitle} onClick={() => setDialog({ ci })}>
               +
             </Button>
           </Space>
@@ -381,7 +414,7 @@ const Editor = ({ token, onLogout }) => {
                             onChange={(e) => patchItem(ci, r.ii, { content: e.target.value })}
                             style={{ fontSize: 16, fontWeight: 600, width: 260 }}
                           />
-                          {r.content !== savedValues[r._k] && <Tag color="orange">{t.changedTag}</Tag>}
+                          {itemChanged(r) && <Tag color="orange">{t.changedTag}</Tag>}
                         </Space>
                       );
                     }
@@ -389,16 +422,17 @@ const Editor = ({ token, onLogout }) => {
                       <div>
                         <strong>{r.name || r.ingredients}</strong>
                         {r.isNew && <Tag color="green" style={{ marginLeft: 8 }}>{t.newTag}</Tag>}
+                        {!r.isNew && itemChanged(r) && <Tag color="orange" style={{ marginLeft: 8 }}>{t.changedTag}</Tag>}
                         {r.name && r.ingredients && <div style={{ color: '#888', fontSize: 12 }}>{r.ingredients}</div>}
                       </div>
                     );
                   },
                 },
                 {
-                  width: 210,
+                  width: 250,
                   render: (_, r) => {
                     if (r.type === 'subheader') return null;
-                    const changed = !r.isNew && r.price !== savedValues[r._k];
+                    const priceChanged = !r.isNew && r.price !== (savedItems[r._k] || {}).price;
                     return (
                       <Space>
                         <InputNumber
@@ -409,13 +443,16 @@ const Editor = ({ token, onLogout }) => {
                           addonAfter="€"
                           inputMode="decimal"
                           placeholder="—"
-                          status={changed || r.isNew ? 'warning' : undefined}
+                          status={priceChanged || r.isNew ? 'warning' : undefined}
                           value={parsePrice(r.price)}
                           onChange={(v) => patchItem(ci, r.ii, { price: formatPrice(v) })}
                           style={{ width: 140 }}
                         />
+                        <Button size="small" title={t.edit} aria-label={t.edit} onClick={() => setDialog({ ci, ii: r.ii })}>
+                          ✎
+                        </Button>
                         {r.isNew && (
-                          <Button size="small" danger title={t.remove} onClick={() => removeNew(ci, r.ii)}>×</Button>
+                          <Button size="small" danger title={t.remove} aria-label={t.remove} onClick={() => removeNew(ci, r.ii)}>×</Button>
                         )}
                       </Space>
                     );
@@ -428,6 +465,12 @@ const Editor = ({ token, onLogout }) => {
       ),
     };
   });
+
+  // keep showing the last dialog's content while the modal fades out
+  if (dialog) lastDialog.current = dialog;
+  const shown = dialog || lastDialog.current;
+  const dialogCategory = shown ? draft.categories[shown.ci] : null;
+  const dialogItem = shown && shown.ii !== undefined ? dialogCategory.items[shown.ii] || null : null;
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -452,10 +495,12 @@ const Editor = ({ token, onLogout }) => {
         />
         <Tabs items={tabs} activeKey={activeTab || draft.categories[0].id} onChange={setActiveTab} />
       </Content>
-      <AddItemModal
-        category={adding === null ? null : draft.categories[adding]}
-        onCancel={() => setAdding(null)}
-        onAdd={addItem}
+      <ItemModal
+        open={!!dialog}
+        category={dialogCategory}
+        item={dialogItem}
+        onCancel={() => setDialog(null)}
+        onSubmit={submitDialog}
       />
       <div
         style={{
