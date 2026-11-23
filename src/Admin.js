@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Layout, Typography, Input, InputNumber, Button, Tabs, Table, Alert, Space, Tag, Modal, Form, Select, Segmented, message,
+  Layout, Typography, Input, InputNumber, Button, Tabs, Alert, Space, Tag, Modal, Form, Select, Segmented, message,
 } from 'antd';
 
 const { Header, Content } = Layout;
@@ -368,6 +368,64 @@ const Editor = ({ token, onLogout }) => {
 
   const q = search.trim().toLowerCase();
 
+  // Rows wrap: on a phone the price controls drop below the dish name instead of overflowing.
+  const rowStyle = {
+    padding: '10px 12px',
+    borderBottom: '1px solid #f0f0f0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 8,
+    flexWrap: 'wrap',
+  };
+
+  const renderRow = (r, ci) => {
+    if (r.type === 'subheader') {
+      return (
+        <div key={r.key} style={rowStyle}>
+          <Input
+            value={r.content}
+            maxLength={100}
+            status={r.content.trim() ? undefined : 'error'}
+            onChange={(e) => patchItem(ci, r.ii, { content: e.target.value })}
+            style={{ fontSize: 16, fontWeight: 600, flex: '1 1 200px', maxWidth: 360 }}
+          />
+          {itemChanged(r) && <Tag color="orange" style={{ margin: 0 }}>{t.changedTag}</Tag>}
+        </div>
+      );
+    }
+    const priceChanged = !r.isNew && r.price !== (savedItems[r._k] || {}).price;
+    return (
+      <div key={r.key} style={rowStyle}>
+        <div style={{ flex: '1 1 180px', minWidth: 0, overflowWrap: 'anywhere' }}>
+          <strong>{r.name || r.ingredients}</strong>
+          {r.isNew && <Tag color="green" style={{ marginLeft: 8 }}>{t.newTag}</Tag>}
+          {!r.isNew && itemChanged(r) && <Tag color="orange" style={{ marginLeft: 8 }}>{t.changedTag}</Tag>}
+          {r.name && r.ingredients && <div style={{ color: '#888', fontSize: 12 }}>{r.ingredients}</div>}
+        </div>
+        <Space size={6} style={{ flex: '0 0 auto' }}>
+          <InputNumber
+            min={0}
+            max={999}
+            step={0.1}
+            precision={2}
+            addonAfter="€"
+            inputMode="decimal"
+            placeholder="—"
+            status={priceChanged || r.isNew ? 'warning' : undefined}
+            value={parsePrice(r.price)}
+            onChange={(v) => patchItem(ci, r.ii, { price: formatPrice(v) })}
+            style={{ width: 128 }}
+          />
+          <Button title={t.edit} aria-label={t.edit} onClick={() => setDialog({ ci, ii: r.ii })}>✎</Button>
+          {r.isNew && (
+            <Button danger title={t.remove} aria-label={t.remove} onClick={() => removeNew(ci, r.ii)}>×</Button>
+          )}
+        </Space>
+      </div>
+    );
+  };
+
   const tabs = draft.categories.map((cat, ci) => {
     const rows = cat.items
       .map((it, ii) => ({ ...it, key: it._k, ii }))
@@ -378,88 +436,26 @@ const Editor = ({ token, onLogout }) => {
       label: cat.label,
       children: (
         <div>
-          <Space style={{ marginBottom: 12 }} wrap>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
             <span>{t.sectionTitle}</span>
             <Input
-              style={{ width: 280 }}
+              style={{ flex: '1 1 200px', maxWidth: 320 }}
               value={cat.title}
               maxLength={100}
               status={cat.title.trim() ? undefined : 'error'}
               onChange={(e) => update(ci, (c) => ({ ...c, title: e.target.value }))}
             />
-            {cat.title !== saved.categories[ci].title && <Tag color="orange">{t.changedTag}</Tag>}
-            <Button type="primary" shape="circle" size="large" title={t.addTitle} onClick={() => setDialog({ ci })}>
+            {cat.title !== saved.categories[ci].title && <Tag color="orange" style={{ margin: 0 }}>{t.changedTag}</Tag>}
+            <Button type="primary" shape="circle" size="large" title={t.addTitle} aria-label={t.addTitle} onClick={() => setDialog({ ci })}>
               +
             </Button>
-          </Space>
+          </div>
           {q && !hasMatch ? (
             <Typography.Text type="secondary">{t.notFound}</Typography.Text>
           ) : (
-            <Table
-              size="small"
-              pagination={false}
-              showHeader={false}
-              dataSource={rows}
-              columns={[
-                {
-                  dataIndex: 'name',
-                  render: (_, r) => {
-                    if (r.type === 'subheader') {
-                      return (
-                        <Space wrap>
-                          <Input
-                            value={r.content}
-                            maxLength={100}
-                            status={r.content.trim() ? undefined : 'error'}
-                            onChange={(e) => patchItem(ci, r.ii, { content: e.target.value })}
-                            style={{ fontSize: 16, fontWeight: 600, width: 260 }}
-                          />
-                          {itemChanged(r) && <Tag color="orange">{t.changedTag}</Tag>}
-                        </Space>
-                      );
-                    }
-                    return (
-                      <div>
-                        <strong>{r.name || r.ingredients}</strong>
-                        {r.isNew && <Tag color="green" style={{ marginLeft: 8 }}>{t.newTag}</Tag>}
-                        {!r.isNew && itemChanged(r) && <Tag color="orange" style={{ marginLeft: 8 }}>{t.changedTag}</Tag>}
-                        {r.name && r.ingredients && <div style={{ color: '#888', fontSize: 12 }}>{r.ingredients}</div>}
-                      </div>
-                    );
-                  },
-                },
-                {
-                  width: 250,
-                  render: (_, r) => {
-                    if (r.type === 'subheader') return null;
-                    const priceChanged = !r.isNew && r.price !== (savedItems[r._k] || {}).price;
-                    return (
-                      <Space>
-                        <InputNumber
-                          min={0}
-                          max={999}
-                          step={0.1}
-                          precision={2}
-                          addonAfter="€"
-                          inputMode="decimal"
-                          placeholder="—"
-                          status={priceChanged || r.isNew ? 'warning' : undefined}
-                          value={parsePrice(r.price)}
-                          onChange={(v) => patchItem(ci, r.ii, { price: formatPrice(v) })}
-                          style={{ width: 140 }}
-                        />
-                        <Button size="small" title={t.edit} aria-label={t.edit} onClick={() => setDialog({ ci, ii: r.ii })}>
-                          ✎
-                        </Button>
-                        {r.isNew && (
-                          <Button size="small" danger title={t.remove} aria-label={t.remove} onClick={() => removeNew(ci, r.ii)}>×</Button>
-                        )}
-                      </Space>
-                    );
-                  },
-                },
-              ]}
-            />
+            <div style={{ background: '#fff', borderRadius: 8 }}>
+              {rows.map((r) => renderRow(r, ci))}
+            </div>
           )}
         </div>
       ),
@@ -475,17 +471,22 @@ const Editor = ({ token, onLogout }) => {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       {ctx}
-      <Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#3c2b1a' }}>
-        <Typography.Title level={4} style={{ color: '#fff', margin: 0 }}>
+      <Header
+        style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8,
+          backgroundColor: '#3c2b1a', height: 'auto', lineHeight: 'normal', padding: '10px 12px',
+        }}
+      >
+        <Typography.Title level={4} style={{ color: '#fff', margin: 0, whiteSpace: 'nowrap' }}>
           BAR<span style={{ color: '#b58569' }}>IN</span> · Admin
         </Typography.Title>
-        <Space size="middle">
+        <Space size="middle" wrap>
           <LangSwitch />
           <a href="/" target="_blank" rel="noreferrer" style={{ color: '#fff' }}>{t.openMenu}</a>
           <Button size="small" onClick={onLogout}>{t.logout}</Button>
         </Space>
       </Header>
-      <Content style={{ padding: 16, maxWidth: 800, width: '100%', margin: '0 auto', paddingBottom: 90 }}>
+      <Content style={{ padding: 12, maxWidth: 800, width: '100%', margin: '0 auto', paddingBottom: 110 }}>
         <Input.Search
           allowClear
           placeholder={t.search}
@@ -504,8 +505,8 @@ const Editor = ({ token, onLogout }) => {
       />
       <div
         style={{
-          position: 'fixed', left: 0, right: 0, bottom: 0, padding: '12px 16px', background: '#fff',
-          borderTop: '1px solid #ddd', display: 'flex', justifyContent: 'center', gap: 12, alignItems: 'center',
+          position: 'fixed', left: 0, right: 0, bottom: 0, padding: '10px 12px calc(10px + env(safe-area-inset-bottom))', background: '#fff',
+          borderTop: '1px solid #ddd', display: 'flex', justifyContent: 'center', gap: 8, alignItems: 'center', flexWrap: 'wrap',
         }}
       >
         <span>{hasEmptyTitle ? t.emptyTitles : changes ? t.changesN(changes) : t.noChanges}</span>
