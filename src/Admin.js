@@ -1,11 +1,25 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Layout, Typography, Input, InputNumber, Button, Tabs, Alert, Space, Tag, Modal, Form, Select, Segmented, message,
+  Layout, Typography, Input, InputNumber, Button, Tabs, Alert, Popconfirm, Dropdown, Space, Tag, Modal, Form, Select, Segmented, message,
 } from 'antd';
 
 const { Header, Content } = Layout;
 const TOKEN_KEY = 'barin_admin_token';
 const LANG_KEY = 'barin_admin_lang';
+
+// Seasonal archive sections. The ids must match ARCHIVE_SECTIONS in netlify/functions/api.mjs.
+const ARCHIVE_SECTIONS = [
+  { id: 'natale', icon: '🎄', ru: 'Рождество (Natale)', it: 'Natale' },
+  { id: 'capodanno', icon: '🎆', ru: 'Новый год (Capodanno)', it: 'Capodanno' },
+  { id: 'epifania', icon: '⭐', ru: 'Богоявление, Бефана (Epifania)', it: 'Epifania' },
+  { id: 'sanvalentino', icon: '❤️', ru: 'День святого Валентина (San Valentino)', it: 'San Valentino' },
+  { id: 'carnevale', icon: '🎭', ru: 'Карнавал (Carnevale)', it: 'Carnevale' },
+  { id: 'pasqua', icon: '🐣', ru: 'Пасха (Pasqua)', it: 'Pasqua' },
+  { id: 'ferragosto', icon: '☀️', ru: 'Феррагосто, 15 августа (Ferragosto)', it: 'Ferragosto' },
+  { id: 'ognissanti', icon: '🕯️', ru: 'День всех святых, 1 ноября (Ognissanti)', it: 'Ognissanti' },
+  { id: 'altro', icon: '📦', ru: 'Прочее (Altro)', it: 'Altro' },
+];
+const sectionLabel = (sec, lang) => `${sec.icon} ${sec[lang]}`;
 
 // ---- interface language (RU / IT). Dish names and descriptions are shown as entered.
 const STRINGS = {
@@ -20,6 +34,19 @@ const STRINGS = {
     newItem: 'Новая позиция',
     editItem: 'Изменить позицию',
     edit: 'Изменить',
+    archive: 'В архив (скрыть из меню)',
+    restore: 'Вернуть в меню',
+    archivedTag: 'в архиве',
+    archiveWhere: 'Куда архивировать?',
+    archiveTab: 'Архив',
+    archiveHint: 'Позиции из архива не видны гостям. Когда начнётся сезон, нажмите «Вернуть», а затем «Сохранить».',
+    archiveEmpty: 'В архиве пока пусто. Нажмите 📦 у позиции, чтобы убрать её из меню до нужного сезона.',
+    restoreShort: 'Вернуть',
+    move: 'Переместить в другой раздел архива',
+    archiveNow: 'Сразу отправить в архив',
+    noArchive: '— не архивировать, показывать в меню —',
+    delete: 'Удалить',
+    deleteConfirm: 'Удалить позицию из меню насовсем?',
     apply: 'Применить',
     dishName: 'Название блюда',
     dishNameReq: 'Введите название или описание',
@@ -60,6 +87,19 @@ const STRINGS = {
     newItem: 'Nuovo piatto',
     editItem: 'Modifica piatto',
     edit: 'Modifica',
+    archive: 'Archivia (nascondi dal menu)',
+    restore: 'Rimetti nel menu',
+    archivedTag: 'archiviato',
+    archiveWhere: 'Dove archiviare?',
+    archiveTab: 'Archivio',
+    archiveHint: 'I piatti in archivio non sono visibili agli ospiti. Quando inizia la stagione premi «Rimetti», poi «Salva».',
+    archiveEmpty: 'L\'archivio è vuoto. Premi 📦 su un piatto per toglierlo dal menu fino alla stagione giusta.',
+    restoreShort: 'Rimetti',
+    move: 'Sposta in un\'altra sezione dell\'archivio',
+    archiveNow: 'Archivia subito',
+    noArchive: '— non archiviare, mostra nel menu —',
+    delete: 'Elimina',
+    deleteConfirm: 'Eliminare definitivamente il piatto dal menu?',
     apply: 'Applica',
     dishName: 'Nome del piatto',
     dishNameReq: 'Inserisci il nome o la descrizione',
@@ -93,6 +133,7 @@ const STRINGS = {
 
 const LangContext = createContext({ lang: 'ru', t: STRINGS.ru, setLang: () => {} });
 const useT = () => useContext(LangContext).t;
+const useLang = () => useContext(LangContext).lang;
 
 const LangSwitch = () => {
   const { lang, setLang } = useContext(LangContext);
@@ -113,13 +154,13 @@ const formatPrice = (n) => (n === null || n === undefined ? '' : `${Number(n).to
 const withKeys = (menu) => ({
   categories: menu.categories.map((c, ci) => ({
     ...c,
-    items: c.items.map((it, ii) => ({ ...it, _k: `${ci}-${ii}` })),
+    items: c.items.map((it, ii) => ({ ...it, _k: `${ci}-${ii}`, ...(it.archived === true ? { archived: 'altro' } : {}) })),
   })),
 });
 const stripKeys = (menu) => ({
   categories: menu.categories.map((c) => ({
     ...c,
-    items: c.items.map(({ _k, isNew, ...rest }) => rest),
+    items: c.items.map(({ _k, isNew, ...rest }) => (rest.archived ? rest : (({ archived, ...r }) => r)(rest))),
   })),
 });
 
@@ -174,6 +215,11 @@ const Login = ({ onLogin }) => {
 // One dialog for both cases: `item` given -> edit that dish, otherwise add a new one to `category`.
 const ItemModal = ({ open, category, item, onCancel, onSubmit }) => {
   const t = useT();
+  const lang = useLang();
+  const archiveOptions = useMemo(
+    () => [{ value: '', label: t.noArchive }, ...ARCHIVE_SECTIONS.map((sec) => ({ value: sec.id, label: sectionLabel(sec, lang) }))],
+    [t, lang],
+  );
   const [form] = Form.useForm();
   const editing = !!item;
 
@@ -191,7 +237,7 @@ const ItemModal = ({ open, category, item, onCancel, onSubmit }) => {
     if (editing) {
       form.setFieldsValue({ name: item.name, ingredients: item.ingredients, price: parsePrice(item.price) });
     } else {
-      form.setFieldsValue({ name: '', ingredients: '', price: null, section: sections[sections.length - 1].value });
+      form.setFieldsValue({ name: '', ingredients: '', price: null, section: sections[sections.length - 1].value, archiveTo: '' });
     }
   }, [open, editing, item, sections, form]);
 
@@ -230,9 +276,14 @@ const ItemModal = ({ open, category, item, onCancel, onSubmit }) => {
           <InputNumber min={0} max={999} step={0.1} precision={2} addonAfter="€" inputMode="decimal" style={{ width: 160 }} />
         </Form.Item>
         {!editing && (
-          <Form.Item name="section" label={t.subsection}>
-            <Select options={sections} />
-          </Form.Item>
+          <>
+            <Form.Item name="section" label={t.subsection}>
+              <Select options={sections} />
+            </Form.Item>
+            <Form.Item name="archiveTo" label={t.archiveNow}>
+              <Select options={archiveOptions} />
+            </Form.Item>
+          </>
         )}
       </Form>
     </Modal>
@@ -241,6 +292,7 @@ const ItemModal = ({ open, category, item, onCancel, onSubmit }) => {
 
 const Editor = ({ token, onLogout }) => {
   const t = useT();
+  const lang = useLang();
   const [saved, setSaved] = useState(null); // last version from the server
   const [draft, setDraft] = useState(null); // edited version
   const [loadError, setLoadError] = useState(false);
@@ -250,16 +302,21 @@ const Editor = ({ token, onLogout }) => {
   const [activeTab, setActiveTab] = useState(null);
   const newCounter = useRef(0);
   const lastDialog = useRef(null);
+  const onLogoutRef = useRef(onLogout);
+  onLogoutRef.current = onLogout;
   const [msg, ctx] = message.useMessage();
 
   const load = (m) => { const k = withKeys(m); setSaved(k); setDraft(k); };
 
   useEffect(() => {
-    fetch('/api/menu')
-      .then((r) => r.json())
-      .then(load)
+    fetch('/api/menu?all=1', { headers: { Authorization: `Bearer ${token}` } })
+      .then((r) => {
+        if (r.status === 401) { onLogoutRef.current(); return null; }
+        return r.json();
+      })
+      .then((m) => { if (m) load(m); })
       .catch(() => setLoadError(true));
-  }, []);
+  }, [token]);
 
   // last saved version of every item, by client id
   const savedItems = useMemo(() => {
@@ -272,7 +329,8 @@ const Editor = ({ token, onLogout }) => {
     const s = savedItems[it._k];
     if (it.isNew || !s) return true;
     if (it.type === 'subheader') return it.content !== s.content;
-    return it.price !== s.price || it.name !== s.name || it.ingredients !== s.ingredients;
+    return it.price !== s.price || it.name !== s.name || it.ingredients !== s.ingredients
+      || (it.archived || '') !== (s.archived || '');
   }, [savedItems]);
 
   const changes = useMemo(() => {
@@ -282,8 +340,11 @@ const Editor = ({ token, onLogout }) => {
       if (c.title !== saved.categories[ci].title) n++;
       c.items.forEach((it) => { if (itemChanged(it)) n++; });
     });
+    const present = new Set();
+    draft.categories.forEach((c) => c.items.forEach((it) => present.add(it._k)));
+    Object.keys(savedItems).forEach((k) => { if (!present.has(k)) n++; }); // deleted dishes
     return n;
-  }, [saved, draft, itemChanged]);
+  }, [saved, draft, itemChanged, savedItems]);
 
   const hasEmptyTitle = useMemo(
     () => !!draft && draft.categories.some((c) => !c.title.trim() || c.items.some((it) => it.type === 'subheader' && !it.content.trim())),
@@ -308,7 +369,9 @@ const Editor = ({ token, onLogout }) => {
   const patchItem = (ci, ii, patch) =>
     update(ci, (c) => ({ ...c, items: c.items.map((it, i) => (i === ii ? { ...it, ...patch } : it)) }));
 
-  const removeNew = (ci, ii) => update(ci, (c) => ({ ...c, items: c.items.filter((_, i) => i !== ii) }));
+  const removeItem = (ci, ii) => update(ci, (c) => ({ ...c, items: c.items.filter((_, i) => i !== ii) }));
+  // value = archive section id, or '' to put the dish back into the menu
+  const setArchive = (ci, ii, value) => patchItem(ci, ii, { archived: value || undefined });
 
   const submitDialog = (values) => {
     const { ci, ii } = dialog;
@@ -335,6 +398,7 @@ const Editor = ({ token, onLogout }) => {
         price: formatPrice(values.price),
         _k: `n${newCounter.current}`,
         isNew: true,
+        ...(values.archiveTo ? { archived: values.archiveTo } : {}),
       };
       return { ...c, items: [...c.items.slice(0, at), item, ...c.items.slice(at)] };
     });
@@ -379,6 +443,11 @@ const Editor = ({ token, onLogout }) => {
     flexWrap: 'wrap',
   };
 
+  // "Where to archive?" menu shown by the 📦 button
+  const archiveMenu = [
+    { type: 'group', label: t.archiveWhere, children: ARCHIVE_SECTIONS.map((sec) => ({ key: sec.id, label: sectionLabel(sec, lang) })) },
+  ];
+
   const renderRow = (r, ci) => {
     if (r.type === 'subheader') {
       return (
@@ -418,8 +487,23 @@ const Editor = ({ token, onLogout }) => {
             style={{ width: 128 }}
           />
           <Button title={t.edit} aria-label={t.edit} onClick={() => setDialog({ ci, ii: r.ii })}>✎</Button>
-          {r.isNew && (
-            <Button danger title={t.remove} aria-label={t.remove} onClick={() => removeNew(ci, r.ii)}>×</Button>
+          {!r.isNew && (
+            <Dropdown trigger={['click']} menu={{ items: archiveMenu, onClick: ({ key }) => setArchive(ci, r.ii, key) }}>
+              <Button title={t.archive} aria-label={t.archive}>📦</Button>
+            </Dropdown>
+          )}
+          {r.isNew ? (
+            <Button danger title={t.remove} aria-label={t.remove} onClick={() => removeItem(ci, r.ii)}>×</Button>
+          ) : (
+            <Popconfirm
+              title={t.deleteConfirm}
+              okText={t.delete}
+              cancelText={t.cancel}
+              okButtonProps={{ danger: true }}
+              onConfirm={() => removeItem(ci, r.ii)}
+            >
+              <Button danger title={t.delete} aria-label={t.delete}>🗑</Button>
+            </Popconfirm>
           )}
         </Space>
       </div>
@@ -429,7 +513,7 @@ const Editor = ({ token, onLogout }) => {
   const tabs = draft.categories.map((cat, ci) => {
     const rows = cat.items
       .map((it, ii) => ({ ...it, key: it._k, ii }))
-      .filter((it) => it.type === 'subheader' || !q || `${it.name} ${it.ingredients}`.toLowerCase().includes(q));
+      .filter((it) => !it.archived && (it.type === 'subheader' || !q || `${it.name} ${it.ingredients}`.toLowerCase().includes(q)));
     const hasMatch = rows.some((r) => r.type === 'item');
     return {
       key: cat.id,
@@ -460,6 +544,80 @@ const Editor = ({ token, onLogout }) => {
         </div>
       ),
     };
+  });
+
+  // ---- Archive tab: archived dishes grouped by seasonal section
+  const matches = (it) => !q || `${it.name} ${it.ingredients}`.toLowerCase().includes(q);
+  const archivedRows = [];
+  let archivedTotal = 0;
+  draft.categories.forEach((c, ci) => c.items.forEach((it, ii) => {
+    if (it.type !== 'item' || !it.archived) return;
+    archivedTotal += 1;
+    if (matches(it)) archivedRows.push({ ...it, key: it._k, ci, ii, category: c.label });
+  }));
+
+  const renderArchiveRow = (r) => (
+    <div key={r.key} style={rowStyle}>
+      <div style={{ flex: '1 1 180px', minWidth: 0, overflowWrap: 'anywhere' }}>
+        <strong>{r.name || r.ingredients}</strong>
+        <Tag style={{ marginLeft: 8 }}>{r.category}</Tag>
+        {r.isNew && <Tag color="green">{t.newTag}</Tag>}
+        {!r.isNew && itemChanged(r) && <Tag color="orange">{t.changedTag}</Tag>}
+        {r.name && r.ingredients && <div style={{ color: '#888', fontSize: 12 }}>{r.ingredients}</div>}
+        <div style={{ color: '#555' }}>{r.price}</div>
+      </div>
+      <Space size={6} style={{ flex: '0 0 auto' }}>
+        <Button type="primary" title={t.restore} aria-label={t.restore} onClick={() => setArchive(r.ci, r.ii, '')}>
+          ↩ {t.restoreShort}
+        </Button>
+        <Button title={t.edit} aria-label={t.edit} onClick={() => setDialog({ ci: r.ci, ii: r.ii })}>✎</Button>
+        <Dropdown
+          trigger={['click']}
+          menu={{ items: archiveMenu, selectedKeys: [r.archived], onClick: ({ key }) => setArchive(r.ci, r.ii, key) }}
+        >
+          <Button title={t.move} aria-label={t.move}>📦</Button>
+        </Dropdown>
+        {r.isNew ? (
+          <Button danger title={t.remove} aria-label={t.remove} onClick={() => removeItem(r.ci, r.ii)}>×</Button>
+        ) : (
+          <Popconfirm
+            title={t.deleteConfirm}
+            okText={t.delete}
+            cancelText={t.cancel}
+            okButtonProps={{ danger: true }}
+            onConfirm={() => removeItem(r.ci, r.ii)}
+          >
+            <Button danger title={t.delete} aria-label={t.delete}>🗑</Button>
+          </Popconfirm>
+        )}
+      </Space>
+    </div>
+  );
+
+  tabs.push({
+    key: 'archive',
+    label: `📦 ${t.archiveTab} (${archivedTotal})`,
+    children: (
+      <div>
+        <Typography.Paragraph type="secondary">{t.archiveHint}</Typography.Paragraph>
+        {archivedTotal === 0 ? (
+          <Typography.Text type="secondary">{t.archiveEmpty}</Typography.Text>
+        ) : (
+          ARCHIVE_SECTIONS.map((sec) => {
+            const list = archivedRows.filter((r) => r.archived === sec.id);
+            if (!list.length) return null;
+            return (
+              <div key={sec.id} style={{ marginBottom: 16 }}>
+                <div style={{ fontWeight: 600, fontSize: 16, margin: '8px 0' }}>
+                  {sectionLabel(sec, lang)} ({list.length})
+                </div>
+                <div style={{ background: '#fff', borderRadius: 8 }}>{list.map(renderArchiveRow)}</div>
+              </div>
+            );
+          })
+        )}
+      </div>
+    ),
   });
 
   // keep showing the last dialog's content while the modal fades out

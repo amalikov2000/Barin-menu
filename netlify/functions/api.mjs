@@ -12,6 +12,10 @@ export const config = { path: ['/api/menu', '/api/login'] };
 const SESSION_MS = 12 * 60 * 60 * 1000;
 const PRICE_RE = /^\d{1,3}\.\d{2} €$/;
 const KEY = 'menu.json';
+// Seasonal archive sections (the admin page shows the same list with labels; keep both in sync)
+const ARCHIVE_SECTIONS = [
+  'natale', 'capodanno', 'epifania', 'sanvalentino', 'carnevale', 'pasqua', 'ferragosto', 'ognissanti', 'altro',
+];
 
 const json = (status, body) =>
   new Response(JSON.stringify(body), {
@@ -66,20 +70,52 @@ function validateAndMerge(current, incoming) {
       if (typeof ingredients !== 'string' || ingredients.length > 300) return 'Invalid ingredients';
       if (!name.trim() && !ingredients.trim()) return 'Item needs a name';
       if (typeof price !== 'string' || (price !== '' && !PRICE_RE.test(price))) return `Invalid price for "${name}"`;
-      items.push({ type: 'item', name, ingredients, price });
+      // `archived: '<section id>'` hides a dish from the public menu and files it in a seasonal archive section
+      let archived;
+      if (it.archived === true) archived = 'altro'; // older data: plain archive
+      else if (typeof it.archived === 'string' && it.archived) {
+        if (!ARCHIVE_SECTIONS.includes(it.archived)) return 'Invalid archive section';
+        archived = it.archived;
+      }
+      items.push({ type: 'item', name, ingredients, price, ...(archived ? { archived } : {}) });
     }
     result.categories.push({ ...cur, title: inc.title.trim(), items });
   }
   return result;
 }
 
+// What guests get: no archived dishes, and no sub-header left without any visible dish under it.
+function publicView(menu) {
+  return {
+    categories: menu.categories.map((c) => {
+      const items = [];
+      let pending = null; // sub-header waiting for its first visible dish
+      for (const it of c.items) {
+        if (it.type === 'subheader') { pending = it; continue; }
+        if (it.archived) continue;
+        if (pending) { items.push(pending); pending = null; }
+        items.push(it);
+      }
+      return { ...c, items };
+    }),
+  };
+}
+
 export default async (req) => {
   try {
-    const path = new URL(req.url).pathname;
+    const url = new URL(req.url);
+    const path = url.pathname;
+    const wantAll = url.searchParams.get('all') === '1';
 
-    if (req.method === 'GET' && path === '/api/menu') return json(200, await readMenu());
+    if (req.method === 'GET' && path === '/api/menu' && !wantAll) return json(200, publicView(await readMenu()));
 
     if (!process.env.ADMIN_PASSWORD) return json(500, { error: 'ADMIN_PASSWORD is not configured' });
+
+    // full menu including archived dishes: admin only
+    if (req.method === 'GET' && path === '/api/menu' && wantAll) {
+      if (!tokenOk(req)) return json(401, { error: 'Unauthorized' });
+      return json(200, await readMenu());
+    }
 
     if (req.method === 'POST' && path === '/api/login') {
       const body = await req.json().catch(() => ({}));
